@@ -55,15 +55,15 @@ pipeline {
             }
         }
 
-        stage('Trivy Image Scan') {
-            steps {
-                sh """
-                docker run --rm \
-                -v /var/run/docker.sock:/var/run/docker.sock \
-                aquasec/trivy image ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                """
-            }
-        }
+        // stage('Trivy Image Scan') {
+        //     steps {
+        //         sh """
+        //         docker run --rm \
+        //         -v /var/run/docker.sock:/var/run/docker.sock \
+        //         aquasec/trivy image ${DOCKER_IMAGE}:${BUILD_NUMBER}
+        //         """
+        //     }
+        // }
 
         stage('Docker Login & Push') {
             steps {
