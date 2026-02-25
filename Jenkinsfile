@@ -96,7 +96,7 @@ pipeline {
 
                 Good job Arunkumar 👌
                 """,
-                to: "yourmail@gmail.com"
+                to: "u.arunkunar1@gmail.com"
             )
         }
 
@@ -111,7 +111,7 @@ pipeline {
 
                 Please check Jenkins logs.
                 """,
-                to: "yourmail@gmail.com"
+                to: "u.arunkunar1@gmail.com"
             )
         }
     }
