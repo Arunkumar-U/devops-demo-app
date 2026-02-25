@@ -99,7 +99,7 @@ pipeline {
             to: "u.arunkunar@gmail.com, vimaldon086@gmail.com", // two recipients
             from: "u.arunkunar1@gmail.com",
             replyTo: "u.arunkunar1@gmail.com",
-            smtpCredentialsId: 'gmail'
+            // smtpCredentialsId: 'gmail'
         )
     }
 
@@ -117,7 +117,7 @@ pipeline {
             to: "u.arunkunar@gmail.com, vimaldon086@gmail.com", // two recipients
             from: "u.arunkunar1@gmail.com",
             replyTo: "u.arunkunar1@gmail.com",
-            smtpCredentialsId: 'gmail'
+            // smtpCredentialsId: 'gmail'
         )
     }
 }
