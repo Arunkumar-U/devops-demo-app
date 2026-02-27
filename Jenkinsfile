@@ -81,6 +81,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Trigger CD Pipeline') {
+            steps {
+                build job: 'devops-demo-app-CD',
+                parameters: [
+                    string(name: 'NEW_TAG', value: "${BUILD_NUMBER}")
+                ],
+                wait: false
+            }
+        }
     }
 
 post {
