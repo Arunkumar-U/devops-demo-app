@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'NEW_TAG', defaultValue: '', description: 'Docker image tag to deploy')
+    }
+
     environment {
         CONFIG_REPO = "https://github.com/Arunkumar-U/devops-demo-app-config.git"
         DOCKER_IMAGE = "arunkumar1611/devops-demo-app"
@@ -18,12 +22,10 @@ pipeline {
 
         stage('Update Image Tag') {
             steps {
-                script {
-                    sh """
-                        sed -i 's|${DOCKER_IMAGE}:.*|${DOCKER_IMAGE}:${NEW_TAG}|g' k8s/deployment.yaml
-                        cat k8s/deployment.yaml
-                    """
-                }
+                sh """
+                    sed -i 's|${DOCKER_IMAGE}:.*|${DOCKER_IMAGE}:${params.NEW_TAG}|g' k8s/deployment.yaml
+                    cat k8s/deployment.yaml
+                """
             }
         }
 
@@ -38,7 +40,7 @@ pipeline {
                         git config user.email "u.arunkunar1@gmail.com"
                         git config user.name "Arunkumar-U"
                         git add k8s/deployment.yaml
-                        git commit -m "Update image tag to ${NEW_TAG}"
+                        git commit -m "Update image tag to ${params.NEW_TAG}"
                         git push https://\${GIT_USER}:\${GIT_PASS}@github.com/Arunkumar-U/devops-demo-app-config.git main
                     """
                 }
@@ -48,7 +50,7 @@ pipeline {
 
     post {
         success {
-            echo "✅ Image tag updated to ${NEW_TAG} and pushed to config repo!"
+            echo "✅ Image tag updated to ${params.NEW_TAG} and pushed to config repo!"
             echo "✅ ArgoCD will now automatically deploy the new version!"
         }
         failure {
