@@ -12,6 +12,13 @@ pipeline {
 
     stages {
 
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()   // ✅ add this
+            }
+        }
+
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
