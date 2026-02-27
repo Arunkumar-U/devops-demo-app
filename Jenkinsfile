@@ -12,13 +12,7 @@ pipeline {
 
     stages {
 
-        stage('Cleanup Workspace') {
-            steps {
-                cleanWs()   // ✅ add this
-            }
-        }
-
-
+    
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -89,7 +83,11 @@ pipeline {
         }
     }
 
-    post {
+post {
+
+    always {
+            cleanWs()   // ✅ moved here so workspace is cleaned AFTER the build
+        }
 
     success {
         emailext(
