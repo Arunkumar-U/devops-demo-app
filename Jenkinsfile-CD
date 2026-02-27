@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        CONFIG_REPO = "https://github.com/Arunkumar-U/devops-demo-app-config.git"
+        DOCKER_IMAGE = "arunkumar1611/devops-demo-app"
+    }
+
+    stages {
+
+        stage('Clone Config Repo') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github',
+                    url: "${CONFIG_REPO}"
+            }
+        }
+
+        stage('Update Image Tag') {
+            steps {
+                script {
+                    sh """
+                        sed -i 's|${DOCKER_IMAGE}:.*|${DOCKER_IMAGE}:${NEW_TAG}|g' k8s/deployment.yaml
+                        cat k8s/deployment.yaml
+                    """
+                }
+            }
+        }
+
+        stage('Push Config Repo') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_PASS'
+                )]) {
+                    sh """
+                        git config user.email "u.arunkunar1@gmail.com"
+                        git config user.name "Arunkumar-U"
+                        git add k8s/deployment.yaml
+                        git commit -m "Update image tag to ${NEW_TAG}"
+                        git push https://\${GIT_USER}:\${GIT_PASS}@github.com/Arunkumar-U/devops-demo-app-config.git main
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Image tag updated to ${NEW_TAG} and pushed to config repo!"
+            echo "✅ ArgoCD will now automatically deploy the new version!"
+        }
+        failure {
+            echo "❌ CD Pipeline failed — check logs!"
+        }
+    }
+}
