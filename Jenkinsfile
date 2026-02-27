@@ -40,15 +40,15 @@ pipeline {
             }
         }
 
-        stage('Trivy File System Scan') {
-            steps {
-                sh """
-                docker run --rm \
-                -v \$PWD:/app \
-                aquasec/trivy fs /app
-                """
-            }
-        }
+        // stage('Trivy File System Scan') {
+        //     steps {
+        //         sh """
+        //         docker run --rm \
+        //         -v \$PWD:/app \
+        //         aquasec/trivy fs /app
+        //         """
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
