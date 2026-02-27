@@ -127,39 +127,7 @@ post {
     }
 }
 
-    // post {
 
-    //     success {
-    //         emailext(
-    //             subject: "SUCCESS: ${JOB_NAME} - Build #${BUILD_NUMBER}",
-    //             body: """
-    //             ✅ Build Successful
-
-    //             Project: ${JOB_NAME}
-    //             Build Number: ${BUILD_NUMBER}
-    //             Docker Image: ${DOCKER_IMAGE}:${BUILD_NUMBER}
-
-    //             Good job Arunkumar 👌
-    //             """,
-    //             to: "u.arunkunar1@gmail.com"
-    //         )
-    //     }
-
-    //     failure {
-    //         emailext(
-    //             subject: "FAILED: ${JOB_NAME} - Build #${BUILD_NUMBER}",
-    //             body: """
-    //             ❌ Build Failed
-
-    //             Project: ${JOB_NAME}
-    //             Build Number: ${BUILD_NUMBER}
-
-    //             Please check Jenkins logs.
-    //             """,
-    //             to: "u.arunkunar1@gmail.com"
-    //         )
-    //     }
-    // }
 }
 
 
